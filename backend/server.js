@@ -11,18 +11,29 @@ const PORT = process.env.PORT || 5000;
 
 const __dirname = path.resolve();
 
-app.use(express.json()); //allow json data in req.body
+app.use(express.json()); // allow json data in req.body
 
-app.use("/api/products", productRoutes);
-
-console.log("ENV:", process.env.NODE_ENV);
+console.log("NODE_ENV check:", process.env.NODE_ENV);
+console.log("Is production?", process.env.NODE_ENV === "production");
 console.log("Path exists:", path.join(__dirname, "/frontend/dist/index.html"));
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+  const staticPath = path.join(__dirname, "/frontend/dist");
+  console.log("Serving static files from:", staticPath);
+  
+  // Serve static files first
+  app.use(express.static(staticPath));
+}
 
+// API routes should come AFTER static files but BEFORE catch-all
+app.use("/api/products", productRoutes);
+
+if (process.env.NODE_ENV === "production") {
+  // Catch-all handler should be LAST
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+    const indexPath = path.resolve(__dirname, "frontend", "dist", "index.html");
+    console.log("Serving index.html from:", indexPath);
+    res.sendFile(indexPath);
   });
 }
 
@@ -30,4 +41,3 @@ app.listen(PORT, () => {
   connectDB();
   console.log("Server started at http://localhost:" + PORT);
 });
- 

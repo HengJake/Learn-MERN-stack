@@ -6,7 +6,9 @@ import {
   SimpleGrid,
   Link,
   useDisclosure,
+  Link as ChakraLink,
 } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import { useProductStore } from "../store/product"; // Adjust the import path as necessary
 import { useEffect } from "react";
 import ProductCard from "../component/ProductCard"; // Adjust the import path as necessary

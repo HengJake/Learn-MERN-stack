@@ -14,8 +14,8 @@ export const useProductStore = create((set) => ({
     if (newProduct.price <= 0) {
       return { success: false, message: "Price must be greater than 0" };
     }
-
-    if (typeof newProduct.price === "string") {
+    
+    if (typeof newProduct.price !== "number") {
       console.log("Price is a string");
       return { success: false, message: "Price must be a number" };
     }

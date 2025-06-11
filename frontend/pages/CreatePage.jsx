@@ -14,8 +14,8 @@ import { useProductStore } from "../store/product";
 function CreatePage() {
   const [newProduct, setNewProduct] = useState({
     name: "",
-    price: "",
-    image: "",
+    price: 0,
+    image: "https://placehold.co/600x400/EEE/31343C",
   });
 
   const toast = useToast();
@@ -77,7 +77,7 @@ function CreatePage() {
               name="price"
               value={newProduct.price}
               onChange={(e) =>
-                setNewProduct({ ...newProduct, price: e.target.value })
+                setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })
               }
             />
             <Input
@@ -103,5 +103,6 @@ function CreatePage() {
     </Container>
   );
 }
+
 
 export default CreatePage;

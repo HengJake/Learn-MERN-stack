@@ -47,6 +47,7 @@ export const updateProduct = async (req, res) => {
     });
     res.status(200).json({ success: true, data: updatedProduct });
   } catch (error) {
+    console.log("Error in updating products : ", error.message);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
